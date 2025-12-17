@@ -1,0 +1,29 @@
+import 'package:chat_app/presentation/blocs/auth/auth_bloc.dart';
+import 'package:chat_app/presentation/blocs/auth/auth_event.dart';
+import 'package:firebase_core/firebase_core.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
+
+import 'app.dart';
+import 'core/di/di.dart';
+
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await ScreenUtil.ensureScreenSize();
+  await Firebase.initializeApp().then(
+    (value) => debugPrint('Firebase Initialized'),
+  );
+  setUpLocator(); // Initialize DI
+  final authBloc = getIt<AuthBloc>()..add(AuthStarted());
+  runApp(
+    ScreenUtilInit(
+      splitScreenMode: true,
+      minTextAdapt: true,
+      child: MultiBlocProvider(
+        providers: [BlocProvider.value(value: authBloc)],
+        child: MyApp(),
+      ),
+    ),
+  );
+}
