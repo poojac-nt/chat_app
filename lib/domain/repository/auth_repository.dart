@@ -1,3 +1,4 @@
+import 'package:chat_app/core/firebase/firebase_auth_service.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
 import '../../core/errors/failure.dart';
@@ -69,6 +70,6 @@ class AuthRepositoryImpl implements AuthRepository {
 
   @override
   Stream<bool> isAuthenticated() {
-    return FirebaseAuth.instance.authStateChanges().map((user) => user != null);
+    return FirebaseAuthService.authStateChanges.map((user) => user != null);
   }
 }

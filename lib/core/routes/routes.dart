@@ -32,6 +32,6 @@ List<GoRoute> routes = [
   GoRoute(
     path: AppRoutes.chatScreen,
     name: AppRoutes.chatScreen,
-    builder: (context, state) => const ChatScreen(),
+    builder: (context, state) => ChatScreen(),
   ),
 ];

@@ -1,3 +1,5 @@
+import 'package:chat_app/core/firebase/firebase_auth_service.dart';
+import 'package:chat_app/domain/entity/message_model.dart';
 import 'package:chat_app/utils/app_constants.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -6,8 +8,16 @@ import 'package:go_router/go_router.dart';
 import '../../../utils/extensions/padding_extenstion.dart';
 
 class ChatScreen extends StatelessWidget {
-  const ChatScreen({super.key});
+  ChatScreen({super.key});
 
+  final List<MessageModel> messages = [
+    MessageModel(id: "", senderId: "", text: "Hi", createdAt: DateTime.now()),
+    MessageModel(id: "", senderId: "", text: "Hi", createdAt: DateTime.now()),
+    MessageModel(id: "", senderId: "", text: "Hi", createdAt: DateTime.now()),
+    MessageModel(id: "", senderId: "", text: "Hi", createdAt: DateTime.now()),
+    MessageModel(id: "", senderId: "", text: "Hi", createdAt: DateTime.now()),
+    MessageModel(id: "", senderId: "", text: "Hi", createdAt: DateTime.now()),
+  ];
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -48,10 +58,12 @@ class ChatScreen extends StatelessWidget {
         children: [
           Expanded(
             child: ListView.builder(
-              itemCount: 20,
+              itemCount: messages.length,
               itemBuilder: (context, index) {
                 return Align(
-                  alignment: index % 2 == 0
+                  alignment:
+                      FirebaseAuthService.currentUserId ==
+                          messages[index].senderId
                       ? Alignment.centerRight
                       : Alignment.centerLeft,
                   child: Container(
@@ -62,7 +74,11 @@ class ChatScreen extends StatelessWidget {
                       horizontal: 13.w,
                     ),
                     decoration: BoxDecoration(
-                      color: index % 2 == 0 ? Colors.blue[300] : Colors.white,
+                      color:
+                          FirebaseAuthService.currentUserId ==
+                              messages[index].senderId
+                          ? Colors.blue[300]
+                          : Colors.white,
                       borderRadius: BorderRadius.only(
                         bottomRight: index % 2 == 0
                             ? Radius.zero
