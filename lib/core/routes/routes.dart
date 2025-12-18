@@ -1,7 +1,9 @@
+import 'package:chat_app/presentation/screens/chat/chat_list_screen.dart';
 import 'package:go_router/go_router.dart';
 
 import '../../presentation/screens/auth/sign_in_screen.dart';
 import '../../presentation/screens/auth/sign_up_screen.dart';
+import '../../presentation/screens/chat/chat_screen.dart';
 import '../../presentation/screens/profile/profile_screen.dart';
 import '../../splash_screen.dart';
 import '../../utils/app_constants.dart';
@@ -22,5 +24,14 @@ List<GoRoute> routes = [
   GoRoute(
     path: AppRoutes.splashScreen,
     builder: (context, state) => const SplashScreen(),
+  ),
+  GoRoute(
+    path: AppRoutes.chatListScreen,
+    builder: (context, state) => const ChatListScreen(),
+  ),
+  GoRoute(
+    path: AppRoutes.chatScreen,
+    name: AppRoutes.chatScreen,
+    builder: (context, state) => const ChatScreen(),
   ),
 ];

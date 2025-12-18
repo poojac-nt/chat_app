@@ -50,7 +50,7 @@ class _SignInScreenState extends State<SignInScreen> {
           if (state is AuthError) {
             _snackBarHelper.showError(state.message.toString());
           } else if (state is Authenticated) {
-            context.go(AppRoutes.profileScreen);
+            context.go(AppRoutes.chatListScreen);
             _snackBarHelper.showSuccess(state.message);
           }
         },

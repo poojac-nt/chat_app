@@ -90,6 +90,9 @@ flutter:
          - asset: assets/fonts/segoeuithibd.ttf
            weight: 700
          - asset: assets/fonts/segoeuithisz.ttf
+         - asset: assets/fonts/segoeuithis.ttf
+
+
 
   #   - family: Trajan Pro
   #     fonts:

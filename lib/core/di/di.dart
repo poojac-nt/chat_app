@@ -17,5 +17,4 @@ void setUpLocator() {
   getIt.registerLazySingleton<AuthBloc>(
     () => AuthBloc(getIt<AuthRepository>()),
   );
-  getIt.registerLazySingleton<AppRouter>(() => AppRouter(getIt<AuthBloc>()));
 }

@@ -1,3 +1,4 @@
+import 'package:chat_app/core/routes/app_router.dart';
 import 'package:chat_app/presentation/blocs/auth/auth_bloc.dart';
 import 'package:chat_app/presentation/blocs/auth/auth_event.dart';
 import 'package:firebase_core/firebase_core.dart';
@@ -16,13 +17,14 @@ void main() async {
   );
   setUpLocator(); // Initialize DI
   final authBloc = getIt<AuthBloc>()..add(AuthStarted());
+  AppRouter.init(authBloc);
   runApp(
     ScreenUtilInit(
       splitScreenMode: true,
       minTextAdapt: true,
       child: MultiBlocProvider(
         providers: [BlocProvider.value(value: authBloc)],
-        child: MyApp(),
+        child: MyApp(authBloc: authBloc),
       ),
     ),
   );

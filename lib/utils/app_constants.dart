@@ -28,6 +28,8 @@ abstract class AppRoutes {
   static const String signUpScreen = '/signUpScreen';
   static const String profileScreen = '/profileScreen';
   static const String splashScreen = '/splashScreen';
+  static const String chatListScreen = '/chatListScreen';
+  static const String chatScreen = '/chatScreen';
 }
 
 abstract class AppTexts {

@@ -7,10 +7,9 @@ import '../../utils/app_constants.dart';
 import 'auth_router_refresh.dart';
 
 class AppRouter {
-  final AuthBloc authBloc;
   static late final GoRouter _router;
 
-  AppRouter(this.authBloc) {
+  static void init(AuthBloc authBloc) {
     _router = GoRouter(
       routes: routes,
       initialLocation: AppRoutes.splashScreen,
@@ -37,7 +36,7 @@ class AppRouter {
           }
           // If state changed to Success -> Go to Profile
           if (authState is Authenticated) {
-            return AppRoutes.profileScreen;
+            return AppRoutes.chatListScreen;
           }
         }
 
@@ -60,5 +59,5 @@ class AppRouter {
     );
   }
 
-  GoRouter get router => _router;
+  static GoRouter get router => _router;
 }

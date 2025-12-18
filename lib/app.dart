@@ -1,10 +1,12 @@
+import 'package:chat_app/presentation/blocs/auth/auth_bloc.dart';
 import 'package:flutter/material.dart';
 
 import 'core/di/di.dart';
 import 'core/routes/app_router.dart';
 
 class MyApp extends StatelessWidget {
-  const MyApp({super.key});
+  final AuthBloc authBloc;
+  const MyApp({super.key, required this.authBloc});
 
   @override
   Widget build(BuildContext context) {
@@ -12,7 +14,7 @@ class MyApp extends StatelessWidget {
       scaffoldMessengerKey: scaffoldMessengerKey, // Connect Key
       debugShowCheckedModeBanner: false,
       theme: ThemeData(fontFamily: 'Segeo Ui'),
-      routerConfig: getIt<AppRouter>().router,
+      routerConfig: AppRouter.router,
     );
   }
 }
