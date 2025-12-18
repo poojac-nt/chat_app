@@ -1,3 +1,5 @@
+import 'package:chat_app/domain/repository/user_repository.dart';
+import 'package:chat_app/presentation/blocs/user/user_bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
 
@@ -16,5 +18,9 @@ void setUpLocator() {
   getIt.registerLazySingleton<AuthRepository>(() => AuthRepositoryImpl());
   getIt.registerLazySingleton<AuthBloc>(
     () => AuthBloc(getIt<AuthRepository>()),
+  );
+  getIt.registerLazySingleton<UserRepository>(() => UserRepositoryImpl());
+  getIt.registerLazySingleton<UserBloc>(
+    () => UserBloc(getIt<UserRepository>()),
   );
 }

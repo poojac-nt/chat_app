@@ -5,10 +5,12 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:go_router/go_router.dart';
 
+import '../../../domain/entity/user_model.dart';
 import '../../../utils/extensions/padding_extenstion.dart';
 
 class ChatScreen extends StatelessWidget {
-  ChatScreen({super.key});
+  final UserModel user;
+  ChatScreen({super.key, required this.user});
 
   final List<MessageModel> messages = [
     MessageModel(id: "", senderId: "", text: "Hi", createdAt: DateTime.now()),
@@ -42,7 +44,7 @@ class ChatScreen extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    'User 1',
+                    user.name,
                     overflow: TextOverflow.ellipsis,
                     softWrap: true,
                     style: TextStyle(fontSize: 17.sp),

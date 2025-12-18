@@ -144,6 +144,12 @@ class _SignUpScreenState extends State<SignUpScreen> {
                               ),
                               SizedBox(height: 80.h),
                               CustomTextField(
+                                hintText: AppConstants.name,
+                                borderRadius: 20.r,
+                                prefixIcon: const Icon(Icons.person),
+                              ),
+                              SizedBox(height: 10.h),
+                              CustomTextField(
                                 validator: Validator.validateEmail,
                                 hintText: AppConstants.email,
                                 controller: emailController,

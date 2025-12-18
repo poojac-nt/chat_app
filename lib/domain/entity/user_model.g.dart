@@ -14,12 +14,10 @@ UserModel _$UserModelFromJson(Map<String, dynamic> json) => UserModel(
   fcmTokens:
       (json['fcmTokens'] as List<dynamic>?)?.map((e) => e as String).toList() ??
       const [],
-  lastSeen: json['lastSeen'] == null
-      ? null
-      : DateTime.parse(json['lastSeen'] as String),
-  createdAt: json['createdAt'] == null
-      ? null
-      : DateTime.parse(json['createdAt'] as String),
+  lastseen: const TimeStampConverter().fromJson(json['lastseen'] as Timestamp?),
+  createdAt: const TimeStampConverter().fromJson(
+    json['createdAt'] as Timestamp?,
+  ),
 );
 
 Map<String, dynamic> _$UserModelToJson(UserModel instance) => <String, dynamic>{
@@ -28,6 +26,6 @@ Map<String, dynamic> _$UserModelToJson(UserModel instance) => <String, dynamic>{
   'email': instance.email,
   'photoUrl': instance.photoUrl,
   'fcmTokens': instance.fcmTokens,
-  'lastSeen': instance.lastSeen?.toIso8601String(),
-  'createdAt': instance.createdAt?.toIso8601String(),
+  'lastseen': const TimeStampConverter().toJson(instance.lastseen),
+  'createdAt': const TimeStampConverter().toJson(instance.createdAt),
 };

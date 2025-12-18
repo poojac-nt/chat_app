@@ -1,3 +1,4 @@
+import 'package:chat_app/domain/entity/user_model.dart';
 import 'package:chat_app/presentation/screens/chat/chat_list_screen.dart';
 import 'package:go_router/go_router.dart';
 
@@ -7,6 +8,7 @@ import '../../presentation/screens/chat/chat_screen.dart';
 import '../../presentation/screens/profile/profile_screen.dart';
 import '../../splash_screen.dart';
 import '../../utils/app_constants.dart';
+import 'args.dart';
 
 List<GoRoute> routes = [
   GoRoute(
@@ -27,11 +29,16 @@ List<GoRoute> routes = [
   ),
   GoRoute(
     path: AppRoutes.chatListScreen,
-    builder: (context, state) => const ChatListScreen(),
+    builder: (context, state) {
+      return ChatListScreen();
+    },
   ),
   GoRoute(
     path: AppRoutes.chatScreen,
     name: AppRoutes.chatScreen,
-    builder: (context, state) => ChatScreen(),
+    builder: (context, state) {
+      final user = state.extra as UserModel;
+      return ChatScreen(user: user);
+    },
   ),
 ];

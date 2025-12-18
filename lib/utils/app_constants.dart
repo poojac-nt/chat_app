@@ -9,6 +9,7 @@ abstract class AppConstants {
   static const String signIn = 'Sign in';
   static const String welcomeBack = 'Welcome\nback';
   static const String seeYouAgain = 'Hey! Good to see you again';
+  static const String name = 'Name';
   static const String email = 'Email';
   static const String password = 'Password';
   static const String confirmPassword = 'Confirm Password';

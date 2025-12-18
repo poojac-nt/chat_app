@@ -1,6 +1,7 @@
 import 'package:chat_app/core/routes/app_router.dart';
 import 'package:chat_app/presentation/blocs/auth/auth_bloc.dart';
 import 'package:chat_app/presentation/blocs/auth/auth_event.dart';
+import 'package:chat_app/presentation/blocs/user/user_bloc.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
@@ -17,11 +18,7 @@ void main() async {
     (value) => debugPrint('Firebase Initialized'),
   );
 
-  FirebaseMessaging.instance.getToken().then((token) {
-    if (token != null) {
-      debugPrint("FCM Token: $token");
-    }
-  });
+  FirebaseMessaging.instance.getToken().then((token) {});
   setUpLocator(); // Initialize DI
   final authBloc = getIt<AuthBloc>()..add(AuthStarted());
   AppRouter.init(authBloc);
@@ -30,7 +27,10 @@ void main() async {
       splitScreenMode: true,
       minTextAdapt: true,
       child: MultiBlocProvider(
-        providers: [BlocProvider.value(value: authBloc)],
+        providers: [
+          BlocProvider.value(value: authBloc),
+          BlocProvider(create: (context) => getIt<UserBloc>()),
+        ],
         child: MyApp(authBloc: authBloc),
       ),
     ),
