@@ -1,4 +1,5 @@
 import 'package:chat_app/domain/entity/user_model.dart';
+import 'package:chat_app/presentation/screens/auth/add_profile_photo.dart';
 import 'package:chat_app/presentation/screens/chat/chat_list_screen.dart';
 import 'package:go_router/go_router.dart';
 
@@ -39,6 +40,12 @@ List<GoRoute> routes = [
     builder: (context, state) {
       final user = state.extra as UserModel;
       return ChatScreen(user: user);
+    },
+  ),
+  GoRoute(
+    path: AppRoutes.addProfilePhotoScreen,
+    builder: (context, state) {
+      return AddProfilePhoto();
     },
   ),
 ];

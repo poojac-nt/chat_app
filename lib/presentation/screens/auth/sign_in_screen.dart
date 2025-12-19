@@ -191,7 +191,9 @@ class _SignInScreenState extends State<SignInScreen> {
                                       ),
                                       recognizer: tapRecognizer
                                         ..onTap = () {
-                                          context.go(AppRoutes.signUpScreen);
+                                          context.go(
+                                            AppRoutes.addProfilePhotoScreen,
+                                          );
                                         },
                                     ),
                                   ],

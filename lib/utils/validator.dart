@@ -21,4 +21,10 @@ class Validator {
       return null;
     }
   }
+
+  static String? validateName(String? name) {
+    if (name == null || name.trim().isEmpty) {
+      return 'Name is required';
+    }
+  }
 }

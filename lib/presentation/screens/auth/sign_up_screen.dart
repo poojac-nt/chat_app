@@ -30,6 +30,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
   final TextEditingController passwordController = TextEditingController();
   final TextEditingController confirmPasswordController =
       TextEditingController();
+  final TextEditingController nameController = TextEditingController();
   final GlobalKey<FormState> formKey = GlobalKey<FormState>();
   final tapRecognizer = TapGestureRecognizer();
   final _snackBarHelper = getIt<SnackBarHelper>();
@@ -53,7 +54,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
           if (state is AuthError) {
             _snackBarHelper.showError(state.message.toString());
           } else if (state is Authenticated) {
-            context.go(AppRoutes.chatListScreen);
+            context.go(AppRoutes.profileScreen);
             _snackBarHelper.showSuccess(state.message);
           }
         },
@@ -143,12 +144,6 @@ class _SignUpScreenState extends State<SignUpScreen> {
                                 subTitle: AppConstants.signUpSubTitle,
                               ),
                               SizedBox(height: 80.h),
-                              CustomTextField(
-                                hintText: AppConstants.name,
-                                borderRadius: 20.r,
-                                prefixIcon: const Icon(Icons.person),
-                              ),
-                              SizedBox(height: 10.h),
                               CustomTextField(
                                 validator: Validator.validateEmail,
                                 hintText: AppConstants.email,
