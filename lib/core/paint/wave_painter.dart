@@ -1,4 +1,4 @@
-import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
 
 class WavePainter extends CustomPainter {
   @override
@@ -42,6 +42,9 @@ class WavePainter extends CustomPainter {
 
     path.lineTo(size.width, 0);
     path.close();
+
+    // Draw the shadow
+    canvas.drawShadow(path, Colors.grey.withOpacity(0.5), 10.0, true);
 
     canvas.drawPath(path, paint);
   }

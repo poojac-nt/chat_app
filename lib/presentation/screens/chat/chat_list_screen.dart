@@ -1,7 +1,3 @@
-import 'package:chat_app/domain/entity/user_model.dart';
-import 'package:chat_app/domain/repository/user_repository.dart';
-import 'package:chat_app/presentation/blocs/user/user_bloc.dart';
-import 'package:chat_app/presentation/blocs/user/user_event.dart';
 import 'package:chat_app/utils/app_constants.dart';
 import 'package:chat_app/utils/extensions/padding_extenstion.dart';
 import 'package:flutter/material.dart';
@@ -11,6 +7,9 @@ import 'package:go_router/go_router.dart';
 
 import '../../../utils/extensions/time_formatter.dart';
 import '../../blocs/user/user_state.dart';
+import '../../blocs/user/users_list/all_users_bloc.dart';
+import '../../blocs/user/users_list/all_users_event.dart';
+import '../../blocs/user/users_list/all_users_state.dart';
 
 class ChatListScreen extends StatefulWidget {
   const ChatListScreen({super.key});
@@ -22,7 +21,7 @@ class ChatListScreen extends StatefulWidget {
 class _ChatListScreenState extends State<ChatListScreen> {
   @override
   void initState() {
-    context.read<UserBloc>().add(FetchUser());
+    context.read<UserListBloc>().add(FetchAllUsers());
     super.initState();
   }
 
@@ -43,15 +42,19 @@ class _ChatListScreenState extends State<ChatListScreen> {
               onTap: () {
                 context.push(AppRoutes.profileScreen);
               },
-              child: CircleAvatar(radius: 15.r),
+              child: CircleAvatar(
+                radius: 15.r,
+                backgroundColor: Colors.grey[100],
+                child: Icon(Icons.person, color: Colors.blue),
+              ),
             ),
           ],
         ),
-        body: BlocBuilder<UserBloc, UserState>(
+        body: BlocBuilder<UserListBloc, UserListState>(
           builder: (context, state) {
-            if (state is UserFetching) {
+            if (state is UserListFetching) {
               return const Center(child: CircularProgressIndicator());
-            } else if (state is UserFetched) {
+            } else if (state is UserListFetched) {
               final users = state.users;
               debugPrint("Users :${users[0].lastseen}");
               return Column(
@@ -62,14 +65,20 @@ class _ChatListScreenState extends State<ChatListScreen> {
                       filled: true,
                       fillColor: Colors.grey[100],
                       prefixIcon: Icon(Icons.search, color: Colors.grey[500]),
-                      contentPadding: EdgeInsets.symmetric(horizontal: 10.w),
+                      contentPadding: EdgeInsets.symmetric(
+                        horizontal: 10.w,
+                        vertical: 1.h,
+                      ),
                       border: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(12.r),
                         borderSide: BorderSide.none,
                       ),
                       hint: Text(
                         'Search',
-                        style: TextStyle(color: Colors.grey[500]),
+                        style: TextStyle(
+                          color: Colors.grey[500],
+                          fontSize: 14.sp,
+                        ),
                       ),
                     ),
                   ).withPadding(EdgeInsets.symmetric(horizontal: 15.w)),
@@ -85,7 +94,11 @@ class _ChatListScreenState extends State<ChatListScreen> {
                               extra: users[index],
                             );
                           },
-                          leading: CircleAvatar(),
+                          leading: CircleAvatar(
+                            radius: 15.r,
+                            backgroundColor: Colors.grey[100],
+                            child: Icon(Icons.person, color: Colors.blue),
+                          ),
                           title: Text(
                             users[index].name,
                             overflow: TextOverflow.ellipsis,
@@ -101,7 +114,7 @@ class _ChatListScreenState extends State<ChatListScreen> {
                   ),
                 ],
               );
-            } else if (state is UserFetchFailed) {
+            } else if (state is UserListFetchFailed) {
               return Center(child: Text(state.failure.message));
             }
             return SizedBox.shrink();

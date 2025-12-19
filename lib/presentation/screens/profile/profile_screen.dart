@@ -1,3 +1,5 @@
+import 'package:chat_app/core/firebase/firebase_auth_service.dart';
+import 'package:chat_app/presentation/blocs/user/user_event.dart';
 import 'package:chat_app/presentation/blocs/user/user_state.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -19,8 +21,18 @@ class ProfileScreen extends StatefulWidget {
 
 class _ProfileScreenState extends State<ProfileScreen> {
   @override
+  void initState() {
+    // TODO: implement initState
+    context.read<UserBloc>().add(
+      FetchUser(id: FirebaseAuthService.currentUserId!),
+    );
+    super.initState();
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: AppColors.scaffoldColor,
       body: BlocBuilder<UserBloc, UserState>(
         builder: (context, state) {
           if (state is UserFetching) {
@@ -43,14 +55,29 @@ class _ProfileScreenState extends State<ProfileScreen> {
                           children: [
                             Stack(
                               children: [
-                                CircleAvatar(radius: 50.r),
+                                Container(
+                                  decoration: BoxDecoration(
+                                    borderRadius: BorderRadius.circular(100.r),
+                                    boxShadow: [
+                                      BoxShadow(
+                                        color: Colors.black54,
+                                        spreadRadius: -6,
+                                        blurRadius: 50,
+                                      ),
+                                    ],
+                                  ),
+                                  child: CircleAvatar(
+                                    radius: 60.r,
+                                    backgroundColor: AppColors.scaffoldColor,
+                                  ),
+                                ),
                                 Positioned(
-                                  top: 66.h,
-                                  left: 68.w,
+                                  top: 82.h,
+                                  left: 79.w,
                                   child: Container(
                                     padding: EdgeInsets.symmetric(
-                                      horizontal: 3.w,
-                                      vertical: 3.h,
+                                      horizontal: 5.w,
+                                      vertical: 4.h,
                                     ),
                                     decoration: BoxDecoration(
                                       color: Colors.white,
@@ -59,28 +86,47 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                     child: Icon(
                                       Icons.edit,
                                       color: Colors.blue,
-                                      size: 15.sp,
+                                      size: 18.sp,
                                     ),
                                   ),
                                 ),
                               ],
                             ),
                             SizedBox(height: 10.h),
-                            Text(
-                              "User name user name user name",
-                              style: TextStyle(fontSize: 14.sp),
-                            ),
                           ],
                         ),
                       ),
                     ),
                     Padding(
-                      padding: EdgeInsets.only(left: 140.w, top: 450.h),
-                      child: ElevatedButton(
-                        onPressed: () {
-                          context.read<AuthBloc>().add(SignOutEvent());
-                        },
-                        child: Text("Sign Out"),
+                      padding: EdgeInsets.only(
+                        left: 20.w,
+                        top: 290.h,
+                        right: 20.w,
+                      ),
+                      child: Column(
+                        children: [
+                          ProfileTile(
+                            title: "Name",
+                            subtitle: state.user.name,
+                            prefixIcon: Icon(Icons.person),
+                          ),
+                          ProfileTile(
+                            title: "Email",
+                            subtitle: state.user.email,
+                            prefixIcon: Icon(Icons.email),
+                          ),
+                          ProfileTile(
+                            title: "Sign out",
+                            contentPadding: EdgeInsets.symmetric(
+                              vertical: 4.h,
+                              horizontal: 16.w,
+                            ),
+                            prefixIcon: Icon(Icons.logout_rounded),
+                            onTap: () {
+                              context.read<AuthBloc>().add(SignOutEvent());
+                            },
+                          ),
+                        ],
                       ),
                     ),
                   ],
@@ -94,6 +140,53 @@ class _ProfileScreenState extends State<ProfileScreen> {
           }
         },
       ),
+    );
+  }
+}
+
+class ProfileTile extends StatelessWidget {
+  final String title;
+  final String? subtitle;
+  final Icon prefixIcon;
+  final VoidCallback? onTap;
+  final EdgeInsets? contentPadding;
+  const ProfileTile({
+    super.key,
+    this.contentPadding,
+    required this.title,
+    this.subtitle,
+    required this.prefixIcon,
+    this.onTap,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      children: [
+        Container(
+          decoration: BoxDecoration(
+            color: Colors.white,
+            borderRadius: BorderRadius.circular(10.r),
+            boxShadow: [
+              BoxShadow(
+                offset: Offset(0, 10),
+                blurRadius: 50,
+                spreadRadius: 4,
+                color: Colors.grey,
+              ),
+            ],
+          ),
+          padding: EdgeInsets.all(15.w),
+          child: ListTile(
+            onTap: onTap,
+            contentPadding: contentPadding,
+            leading: prefixIcon,
+            title: Text(title),
+            subtitle: subtitle != null ? Text(subtitle ?? '') : null,
+          ),
+        ),
+        SizedBox(height: 15.h),
+      ],
     );
   }
 }

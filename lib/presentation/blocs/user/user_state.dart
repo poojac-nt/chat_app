@@ -12,18 +12,17 @@ abstract class UserState extends Equatable {
 
 class UserFetching extends UserState {}
 
-class UserFetched extends UserState {
-  final List<UserModel> users;
-  const UserFetched(this.users);
-
-  @override
-  List<Object> get props => [users];
-}
-
 class UserFetchFailed extends UserState {
   final Failure failure;
   const UserFetchFailed(this.failure);
 
   @override
   List<Object> get props => [failure];
+}
+
+class UserFetched extends UserState {
+  final UserModel user;
+  const UserFetched(this.user);
+  @override
+  List<Object> get props => [user];
 }

@@ -7,6 +7,7 @@ import '../entity/user_model.dart';
 
 abstract class UserRepository {
   Future<Either<Failure, List<UserModel>>> getAllUsers();
+  Future<Either<Failure, UserModel>> getUserById(String id);
 }
 
 class UserRepositoryImpl implements UserRepository {
@@ -21,6 +22,20 @@ class UserRepositoryImpl implements UserRepository {
       return Right(
         users.docs.map((doc) => UserModel.fromJson(doc.data())).toList(),
       );
+    } catch (e) {
+      return Left(Failure(message: e.toString()));
+    }
+  }
+
+  @override
+  Future<Either<Failure, UserModel>> getUserById(String id) async {
+    try {
+      final response = await FirestoreService.instance.firestore
+          .collection('users')
+          .doc("aPpgIbP52wQ2IUnTBZZx")
+          .get();
+      final user = UserModel.fromJson(response.data() as Map<String, dynamic>);
+      return Right(user);
     } catch (e) {
       return Left(Failure(message: e.toString()));
     }
