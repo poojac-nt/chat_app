@@ -40,7 +40,11 @@ class ChatScreen extends StatelessWidget {
           toolbarHeight: 50.h,
           title: Row(
             children: [
-              CircleAvatar(backgroundColor: Colors.grey),
+              CircleAvatar(
+                radius: 19.r,
+                backgroundColor: Colors.grey[100],
+                child: Icon(Icons.person, color: Colors.blue),
+              ),
               SizedBox(width: 10.w),
               Expanded(
                 child: Column(

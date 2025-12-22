@@ -51,7 +51,7 @@ class _SignInScreenState extends State<SignInScreen> {
             _snackBarHelper.showError(state.message.toString());
           } else if (state is Authenticated) {
             context.go(AppRoutes.chatListScreen);
-            _snackBarHelper.showSuccess(state.message);
+            _snackBarHelper.showSuccess("Logged In");
           }
         },
         builder: (context, state) {
@@ -191,9 +191,7 @@ class _SignInScreenState extends State<SignInScreen> {
                                       ),
                                       recognizer: tapRecognizer
                                         ..onTap = () {
-                                          context.go(
-                                            AppRoutes.addProfilePhotoScreen,
-                                          );
+                                          context.go(AppRoutes.signUpScreen);
                                         },
                                     ),
                                   ],

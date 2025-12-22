@@ -38,7 +38,13 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
 
   Future<void> _signUpEvent(SignUpEvent event, Emitter<AuthState> emit) async {
     emit(AuthLoading());
-    final response = await authRepository.signUp(event.email, event.password);
+    final response = await authRepository.signUp(
+      event.name,
+      event.email,
+      event.password,
+      event.profileImgUrl,
+      event.fcmToken,
+    );
     response.fold(
       (failure) => emit(AuthError(message: failure)),
       (message) => emit(Authenticated(message: message)),

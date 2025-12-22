@@ -1,3 +1,4 @@
+import 'package:chat_app/core/firebase/firebase_auth_service.dart';
 import 'package:chat_app/core/firebase/firestore_service.dart';
 import 'package:either_dart/either.dart';
 import 'package:flutter/cupertino.dart';
@@ -16,6 +17,7 @@ class UserRepositoryImpl implements UserRepository {
     try {
       final users = await FirestoreService.instance.firestore
           .collection('users')
+          .where("uid", isNotEqualTo: FirebaseAuthService.currentUser!.uid)
           .get();
 
       debugPrint("Users :${users.docs.toString()}");

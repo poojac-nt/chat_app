@@ -13,7 +13,7 @@ class AppRouter {
     _router = GoRouter(
       routes: routes,
       initialLocation: AppRoutes.splashScreen,
-      debugLogDiagnostics: true,
+      debugLogDiagnostics: !kReleaseMode,
       refreshListenable: AuthRouterRefresh(authBloc.stream),
 
       redirect: (context, state) {
@@ -42,9 +42,7 @@ class AppRouter {
 
         final isLoggingIn = location == AppRoutes.signInScreen;
         final isSigningUp = location == AppRoutes.signUpScreen;
-        final isAddingProfilePhoto =
-            location == AppRoutes.addProfilePhotoScreen;
-        final isPublicPage = isLoggingIn || isSigningUp || isAddingProfilePhoto;
+        final isPublicPage = isLoggingIn || isSigningUp;
 
         // Guard: If Unauthenticated and trying to access private page -> Login
         if (authState is UnAuthenticated && !isPublicPage) {

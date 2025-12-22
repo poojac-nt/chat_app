@@ -12,11 +12,22 @@ class AuthStarted extends AuthEvent {
 }
 
 class SignUpEvent extends AuthEvent {
+  final String name;
   final String email;
   final String password;
-  SignUpEvent({required this.email, required this.password});
+  final String? profileImgUrl;
+  final String? fcmToken;
+
+  SignUpEvent({
+    required this.name,
+    required this.email,
+    required this.password,
+    this.profileImgUrl,
+    this.fcmToken,
+  });
+
   @override
-  List<Object?> get props => [email, password];
+  List<Object?> get props => [name, email, password, profileImgUrl, fcmToken];
 }
 
 class SignInEvent extends AuthEvent {

@@ -69,6 +69,11 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                   child: CircleAvatar(
                                     radius: 60.r,
                                     backgroundColor: AppColors.scaffoldColor,
+                                    child: Icon(
+                                      Icons.person,
+                                      color: Colors.blue,
+                                      size: 70,
+                                    ),
                                   ),
                                 ),
                                 Positioned(

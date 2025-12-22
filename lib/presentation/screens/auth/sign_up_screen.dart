@@ -1,3 +1,4 @@
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -6,7 +7,6 @@ import 'package:go_router/go_router.dart';
 
 import '../../../core/di/di.dart';
 import '../../../core/paint/custom_painter.dart';
-
 import '../../../utils/app_constants.dart';
 import '../../../utils/extensions/padding_extenstion.dart';
 import '../../../utils/helper/snackbar_helper.dart';
@@ -40,8 +40,15 @@ class _SignUpScreenState extends State<SignUpScreen> {
     emailController.dispose();
     passwordController.dispose();
     confirmPasswordController.dispose();
+    nameController.dispose();
     tapRecognizer.dispose();
     super.dispose();
+  }
+
+  Future<String?> _getFcmToken() async {
+    // Requesting permission for notifications (for iOS and web)
+    await FirebaseMessaging.instance.requestPermission();
+    return FirebaseMessaging.instance.getToken();
   }
 
   @override
@@ -54,8 +61,8 @@ class _SignUpScreenState extends State<SignUpScreen> {
           if (state is AuthError) {
             _snackBarHelper.showError(state.message.toString());
           } else if (state is Authenticated) {
-            context.go(AppRoutes.profileScreen);
-            _snackBarHelper.showSuccess(state.message);
+            context.go(AppRoutes.chatListScreen);
+            _snackBarHelper.showSuccess("Signed Up Successfully");
           }
         },
         builder: (context, state) {
@@ -145,6 +152,14 @@ class _SignUpScreenState extends State<SignUpScreen> {
                               ),
                               SizedBox(height: 80.h),
                               CustomTextField(
+                                validator: Validator.validateName,
+                                hintText: "Full Name",
+                                controller: nameController,
+                                borderRadius: 20.r,
+                                prefixIcon: const Icon(Icons.person_outline),
+                              ),
+                              SizedBox(height: 10.h),
+                              CustomTextField(
                                 validator: Validator.validateEmail,
                                 hintText: AppConstants.email,
                                 controller: emailController,
@@ -185,10 +200,14 @@ class _SignUpScreenState extends State<SignUpScreen> {
                                   final isValid = formKey.currentState!
                                       .validate();
                                   if (isValid) {
+                                    final fcmToken = await _getFcmToken();
                                     context.read<AuthBloc>().add(
                                       SignUpEvent(
-                                        email: emailController.text,
+                                        name: nameController.text.trim(),
+                                        email: emailController.text.trim(),
                                         password: passwordController.text,
+                                        profileImgUrl: '',
+                                        fcmToken: fcmToken,
                                       ),
                                     );
                                   }

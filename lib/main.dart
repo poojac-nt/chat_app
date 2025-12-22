@@ -1,4 +1,5 @@
 import 'package:chat_app/core/routes/app_router.dart';
+import 'package:chat_app/domain/repository/auth_repository.dart';
 import 'package:chat_app/presentation/blocs/auth/auth_bloc.dart';
 import 'package:chat_app/presentation/blocs/auth/auth_event.dart';
 import 'package:chat_app/presentation/blocs/user/user_bloc.dart';
@@ -19,7 +20,6 @@ void main() async {
     (value) => debugPrint('Firebase Initialized'),
   );
 
-  FirebaseMessaging.instance.getToken().then((token) {});
   setUpLocator(); // Initialize DI
   final authBloc = getIt<AuthBloc>()..add(AuthStarted());
   AppRouter.init(authBloc);
