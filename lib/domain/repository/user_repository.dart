@@ -34,7 +34,7 @@ class UserRepositoryImpl implements UserRepository {
     try {
       final response = await FirestoreService.instance.firestore
           .collection('users')
-          .doc("aPpgIbP52wQ2IUnTBZZx")
+          .doc(id)
           .get();
       final user = UserModel.fromJson(response.data() as Map<String, dynamic>);
       return Right(user);

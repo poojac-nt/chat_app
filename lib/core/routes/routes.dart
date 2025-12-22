@@ -1,5 +1,6 @@
 import 'package:chat_app/domain/entity/user_model.dart';
 import 'package:chat_app/presentation/screens/auth/add_profile_photo.dart';
+import 'package:chat_app/presentation/screens/chat/all_chat_list_screen.dart';
 import 'package:chat_app/presentation/screens/chat/chat_list_screen.dart';
 import 'package:go_router/go_router.dart';
 
@@ -9,7 +10,6 @@ import '../../presentation/screens/chat/chat_screen.dart';
 import '../../presentation/screens/profile/profile_screen.dart';
 import '../../splash_screen.dart';
 import '../../utils/app_constants.dart';
-import 'args.dart';
 
 List<GoRoute> routes = [
   GoRoute(
@@ -47,5 +47,9 @@ List<GoRoute> routes = [
     builder: (context, state) {
       return AddProfilePhoto();
     },
+  ),
+  GoRoute(
+    path: AppRoutes.allChatScreen,
+    builder: (context, state) => const AllChatListScreen(),
   ),
 ];

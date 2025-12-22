@@ -61,7 +61,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
           if (state is AuthError) {
             _snackBarHelper.showError(state.message.toString());
           } else if (state is Authenticated) {
-            context.go(AppRoutes.chatListScreen);
+            context.go(AppRoutes.allChatScreen);
             _snackBarHelper.showSuccess("Signed Up Successfully");
           }
         },
