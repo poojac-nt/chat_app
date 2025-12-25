@@ -72,21 +72,23 @@ class _ChatListScreenState extends State<ChatListScreen> {
           BlocBuilder<ConversationBloc, ConversationState>(
             builder: (context, state) {
               if (state is ConversationLoading) {
-                return Skeletonizer(
-                  child: ListView.builder(
-                    itemCount: 10,
-                    itemBuilder: (context, index) {
-                      return ListTile(
-                        leading: CircleAvatar(
-                          radius: 15.r,
-                          backgroundColor: Colors.grey[100],
-                          child: Icon(Icons.person, color: Colors.blue),
-                        ),
-                        title: Text('Username is loading...'),
-                        subtitle: Text('Last message is loading...'),
-                        trailing: Text('10:10 AM'),
-                      );
-                    },
+                return Expanded(
+                  child: Skeletonizer(
+                    child: ListView.builder(
+                      itemCount: 10,
+                      itemBuilder: (context, index) {
+                        return ListTile(
+                          leading: CircleAvatar(
+                            radius: 15.r,
+                            backgroundColor: Colors.grey[100],
+                            child: Icon(Icons.person, color: Colors.blue),
+                          ),
+                          title: Text('Username is loading...'),
+                          subtitle: Text('Last message is loading...'),
+                          trailing: Text('10:10 AM'),
+                        );
+                      },
+                    ),
                   ),
                 );
               }

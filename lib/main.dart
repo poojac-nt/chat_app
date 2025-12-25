@@ -1,3 +1,5 @@
+import 'dart:ui';
+
 import 'package:chat_app/core/routes/app_router.dart';
 import 'package:chat_app/domain/repository/auth_repository.dart';
 import 'package:chat_app/presentation/blocs/auth/auth_bloc.dart';
@@ -7,6 +9,7 @@ import 'package:chat_app/presentation/blocs/message/message_bloc.dart';
 import 'package:chat_app/presentation/blocs/user/user_bloc.dart';
 import 'package:chat_app/presentation/blocs/user/users_list/all_users_bloc.dart';
 import 'package:firebase_core/firebase_core.dart';
+import 'package:firebase_crashlytics/firebase_crashlytics.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -21,6 +24,15 @@ void main() async {
   await Firebase.initializeApp().then(
     (value) => debugPrint('Firebase Initialized'),
   );
+
+  FlutterError.onError = (errorDetails) {
+    FirebaseCrashlytics.instance.recordFlutterFatalError(errorDetails);
+  };
+  // Pass all uncaught asynchronous errors that aren't handled by the Flutter framework to Crashlytics
+  PlatformDispatcher.instance.onError = (error, stack) {
+    FirebaseCrashlytics.instance.recordError(error, stack, fatal: true);
+    return true;
+  };
 
   setUpLocator(); // Initialize DI
   final authBloc = getIt<AuthBloc>()..add(AuthStarted());

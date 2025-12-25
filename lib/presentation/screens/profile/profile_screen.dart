@@ -131,6 +131,17 @@ class _ProfileScreenState extends State<ProfileScreen> {
                               context.read<AuthBloc>().add(SignOutEvent());
                             },
                           ),
+                          // ProfileTile(
+                          //   title: "Throw exception",
+                          //   contentPadding: EdgeInsets.symmetric(
+                          //     vertical: 4.h,
+                          //     horizontal: 16.w,
+                          //   ),
+                          //   prefixIcon: Icon(Icons.logout_rounded),
+                          //   onTap: () {
+                          //     throw Exception("This is an exception");
+                          //   },
+                          // ),
                         ],
                       ),
                     ),
