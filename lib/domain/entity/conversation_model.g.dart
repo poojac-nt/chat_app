@@ -8,26 +8,27 @@ part of 'conversation_model.dart';
 
 ConversationModel _$ConversationModelFromJson(Map<String, dynamic> json) =>
     ConversationModel(
-      id: json['id'] as String,
       participants: (json['participants'] as List<dynamic>)
           .map((e) => e as String)
           .toList(),
+      participantsData: json['participantsData'] as Map<String, dynamic>,
       lastMessage: json['lastMessage'] as String?,
       lastMessageSenderId: json['lastMessageSenderId'] as String?,
-      lastMessageAt: json['lastMessageAt'] == null
-          ? null
-          : DateTime.parse(json['lastMessageAt'] as String),
-      createdAt: json['createdAt'] == null
-          ? null
-          : DateTime.parse(json['createdAt'] as String),
+      lastMessageAt: const TimeStampConverter().fromJson(
+        json['lastMessageAt'] as Timestamp?,
+      ),
+      createdAt: const TimeStampConverter().fromJson(
+        json['lastMessageAt'] as Timestamp?,
+      ),
     );
 
-Map<String, dynamic> _$ConversationModelToJson(ConversationModel instance) =>
-    <String, dynamic>{
-      'id': instance.id,
-      'participants': instance.participants,
-      'lastMessage': instance.lastMessage,
-      'lastMessageSenderId': instance.lastMessageSenderId,
-      'lastMessageAt': instance.lastMessageAt?.toIso8601String(),
-      'createdAt': instance.createdAt?.toIso8601String(),
-    };
+Map<String, dynamic> _$ConversationModelToJson(
+  ConversationModel instance,
+) => <String, dynamic>{
+  'participants': instance.participants,
+  'participantsData': instance.participantsData,
+  'lastMessage': instance.lastMessage,
+  'lastMessageSenderId': instance.lastMessageSenderId,
+  'lastMessageAt': const TimeStampConverter().toJson(instance.lastMessageAt),
+  'createdAt': const TimeStampConverter().toJson(instance.createdAt),
+};

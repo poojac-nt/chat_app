@@ -1,5 +1,6 @@
 import 'package:chat_app/core/firebase/firebase_auth_service.dart';
 import 'package:chat_app/core/firebase/firestore_service.dart';
+import 'package:chat_app/domain/entity/conversation_model.dart';
 import 'package:chat_app/domain/entity/message_model.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:either_dart/either.dart';
@@ -9,7 +10,8 @@ import '../../core/errors/failure.dart';
 abstract class ChatRepository {
   Future<Either<Failure, void>> sendMessage(MessageModel messageModel);
 
-  Stream<List<MessageModel>> getMessages(String conversationId);
+  Stream<List<MessageModel>> getMessages(String receiverId);
+  Stream<List<ConversationModel>> getConversations();
 }
 
 class ChatRepositoryImpl implements ChatRepository {
@@ -23,6 +25,20 @@ class ChatRepositoryImpl implements ChatRepository {
       users.sort();
       String conversationId = users.join("_");
 
+      final userDocs = await Future.wait([
+        FirestoreService.instance.firestore
+            .collection('users')
+            .doc(senderId)
+            .get(),
+        FirestoreService.instance.firestore
+            .collection('users')
+            .doc(receiverId)
+            .get(),
+      ]);
+
+      final senderData = userDocs[0].data();
+      final receiverData = userDocs[1].data();
+
       final conversationRef = FirestoreService.instance.firestore
           .collection('conversations')
           .doc(conversationId);
@@ -35,6 +51,10 @@ class ChatRepositoryImpl implements ChatRepository {
         'lastMessageAt': messageModel.createdAt,
         'lastMessageSenderId': messageModel.senderId,
         'participants': users,
+        'participantsData': {
+          senderId: {'name': senderData!['name']},
+          receiverId: {'name': receiverData!['name']},
+        },
       };
       batch.set(conversationRef, conversationData, SetOptions(merge: true));
       await batch.commit();
@@ -63,6 +83,27 @@ class ChatRepositoryImpl implements ChatRepository {
           });
     } catch (e) {
       return Stream.value([]);
+    }
+  }
+
+  @override
+  Stream<List<ConversationModel>> getConversations() {
+    try {
+      return FirestoreService.instance.firestore
+          .collection('conversations')
+          .where(
+            'participants',
+            arrayContains: FirebaseAuthService.currentUserId,
+          )
+          .orderBy('lastMessageAt', descending: true)
+          .snapshots()
+          .map((snapshots) {
+            return snapshots.docs.map((json) {
+              return ConversationModel.fromJson(json.data());
+            }).toList();
+          });
+    } catch (e) {
+      return Stream.empty();
     }
   }
 }
