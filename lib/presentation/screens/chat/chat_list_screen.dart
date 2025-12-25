@@ -6,6 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:go_router/go_router.dart';
+import 'package:skeletonizer/skeletonizer.dart';
 
 import '../../../utils/app_constants.dart';
 import '../../../utils/extensions/padding_extenstion.dart';
@@ -71,7 +72,23 @@ class _ChatListScreenState extends State<ChatListScreen> {
           BlocBuilder<ConversationBloc, ConversationState>(
             builder: (context, state) {
               if (state is ConversationLoading) {
-                return const Center(child: CircularProgressIndicator());
+                return Skeletonizer(
+                  child: ListView.builder(
+                    itemCount: 10,
+                    itemBuilder: (context, index) {
+                      return ListTile(
+                        leading: CircleAvatar(
+                          radius: 15.r,
+                          backgroundColor: Colors.grey[100],
+                          child: Icon(Icons.person, color: Colors.blue),
+                        ),
+                        title: Text('Username is loading...'),
+                        subtitle: Text('Last message is loading...'),
+                        trailing: Text('10:10 AM'),
+                      );
+                    },
+                  ),
+                );
               }
               if (state is ConversationFetched) {
                 final conversations = state.conversations;

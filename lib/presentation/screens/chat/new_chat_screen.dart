@@ -8,19 +8,18 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:go_router/go_router.dart';
 import 'package:skeletonizer/skeletonizer.dart';
 
-import '../../../utils/extensions/time_formatter.dart';
 import '../../blocs/user/users_list/all_users_bloc.dart';
 import '../../blocs/user/users_list/all_users_event.dart';
 import '../../blocs/user/users_list/all_users_state.dart';
 
-class AllChatListScreen extends StatefulWidget {
-  const AllChatListScreen({super.key});
+class NewChatScreen extends StatefulWidget {
+  const NewChatScreen({super.key});
 
   @override
-  State<AllChatListScreen> createState() => _AllChatListScreenState();
+  State<NewChatScreen> createState() => _NewChatScreenState();
 }
 
-class _AllChatListScreenState extends State<AllChatListScreen> {
+class _NewChatScreenState extends State<NewChatScreen> {
   @override
   void initState() {
     context.read<UserListBloc>().add(FetchAllUsers());
@@ -35,7 +34,7 @@ class _AllChatListScreenState extends State<AllChatListScreen> {
       child: Scaffold(
         backgroundColor: Colors.white,
         appBar: AppBar(
-          title: Text('All Chats'),
+          title: Text('New Chat'), // <-- 1. Renamed for clarity
           backgroundColor: Colors.white,
           surfaceTintColor: Colors.white,
           actionsPadding: EdgeInsets.only(right: 15.w),
@@ -60,15 +59,10 @@ class _AllChatListScreenState extends State<AllChatListScreen> {
                 child: ListView.builder(
                   itemCount: 10,
                   itemBuilder: (context, index) {
+                    // 2. Simplified skeleton to match the final UI
                     return ListTile(
-                      leading: CircleAvatar(
-                        radius: 15.r,
-                        backgroundColor: Colors.grey[100],
-                        child: Icon(Icons.person, color: Colors.blue),
-                      ),
+                      leading: CircleAvatar(radius: 15.r),
                       title: Text('Username is loading...'),
-                      subtitle: Text('Last message is loading...'),
-                      trailing: Text('10:10 AM'),
                     );
                   },
                 ),
@@ -119,11 +113,6 @@ class _AllChatListScreenState extends State<AllChatListScreen> {
                             users[index].name,
                             overflow: TextOverflow.ellipsis,
                           ),
-                          subtitle: Text(
-                            'Message Message Message Message Message',
-                            overflow: TextOverflow.ellipsis,
-                          ),
-                          trailing: Text(users[index].lastseen?.toTime() ?? ''),
                         );
                       },
                     ),

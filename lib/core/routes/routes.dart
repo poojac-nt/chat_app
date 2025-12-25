@@ -1,6 +1,6 @@
 import 'package:chat_app/domain/entity/user_model.dart';
 import 'package:chat_app/presentation/screens/auth/add_profile_photo.dart';
-import 'package:chat_app/presentation/screens/chat/all_chat_list_screen.dart';
+import 'package:chat_app/presentation/screens/chat/new_chat_screen.dart';
 import 'package:chat_app/presentation/screens/chat/chat_list_screen.dart';
 import 'package:go_router/go_router.dart';
 
@@ -50,6 +50,6 @@ List<GoRoute> routes = [
   ),
   GoRoute(
     path: AppRoutes.allChatScreen,
-    builder: (context, state) => const AllChatListScreen(),
+    builder: (context, state) => const NewChatScreen(),
   ),
 ];
