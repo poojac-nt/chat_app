@@ -2,6 +2,7 @@ import 'package:chat_app/core/routes/app_router.dart';
 import 'package:chat_app/domain/repository/auth_repository.dart';
 import 'package:chat_app/presentation/blocs/auth/auth_bloc.dart';
 import 'package:chat_app/presentation/blocs/auth/auth_event.dart';
+import 'package:chat_app/presentation/blocs/message/message_bloc.dart';
 import 'package:chat_app/presentation/blocs/user/user_bloc.dart';
 import 'package:chat_app/presentation/blocs/user/users_list/all_users_bloc.dart';
 import 'package:firebase_core/firebase_core.dart';
@@ -32,6 +33,7 @@ void main() async {
           BlocProvider.value(value: authBloc),
           BlocProvider(create: (context) => getIt<UserBloc>()),
           BlocProvider(create: (context) => getIt<UserListBloc>()),
+          BlocProvider(create: (context) => getIt<MessageBloc>()),
         ],
         child: MyApp(authBloc: authBloc),
       ),

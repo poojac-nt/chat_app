@@ -63,7 +63,7 @@ class _ChatListScreenState extends State<ChatListScreen> {
       floatingActionButton: FloatingActionButton(
         backgroundColor: Colors.blue,
         onPressed: () {
-          context.pushReplacement(AppRoutes.chatListScreen);
+          context.pushReplacement(AppRoutes.allChatScreen);
         },
         child: const Icon(Icons.add, color: Colors.white),
       ),

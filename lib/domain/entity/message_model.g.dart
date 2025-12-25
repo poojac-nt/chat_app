@@ -7,9 +7,9 @@ part of 'message_model.dart';
 // **************************************************************************
 
 MessageModel _$MessageModelFromJson(Map<String, dynamic> json) => MessageModel(
-  id: json['id'] as String,
   senderId: json['senderId'] as String,
-  text: json['text'] as String,
+  receiverId: json['receiverId'] as String,
+  content: json['content'] as String,
   type:
       $enumDecodeNullable(_$MessageTypeEnumMap, json['type']) ??
       MessageType.text,
@@ -17,9 +17,7 @@ MessageModel _$MessageModelFromJson(Map<String, dynamic> json) => MessageModel(
       $enumDecodeNullable(_$MessageStatusEnumMap, json['status']) ??
       MessageStatus.sent,
   createdAt: DateTime.parse(json['createdAt'] as String),
-  readAt: json['readAt'] == null
-      ? null
-      : DateTime.parse(json['readAt'] as String),
+  readAt: const TimeStampConverter().fromJson(json['readAt'] as Timestamp?),
   deletedFor:
       (json['deletedFor'] as List<dynamic>?)
           ?.map((e) => e as String)
@@ -29,13 +27,13 @@ MessageModel _$MessageModelFromJson(Map<String, dynamic> json) => MessageModel(
 
 Map<String, dynamic> _$MessageModelToJson(MessageModel instance) =>
     <String, dynamic>{
-      'id': instance.id,
       'senderId': instance.senderId,
-      'text': instance.text,
+      'receiverId': instance.receiverId,
+      'content': instance.content,
       'type': _$MessageTypeEnumMap[instance.type]!,
       'status': _$MessageStatusEnumMap[instance.status]!,
       'createdAt': instance.createdAt.toIso8601String(),
-      'readAt': instance.readAt?.toIso8601String(),
+      'readAt': const TimeStampConverter().toJson(instance.readAt),
       'deletedFor': instance.deletedFor,
     };
 
