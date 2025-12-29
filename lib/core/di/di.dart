@@ -11,7 +11,6 @@ import '../../domain/repository/auth_repository.dart';
 import '../../presentation/blocs/auth/auth_bloc.dart';
 import '../../presentation/blocs/user/users_list/all_users_bloc.dart';
 import '../../utils/helper/snackbar_helper.dart';
-import '../routes/app_router.dart';
 
 final getIt = GetIt.instance;
 final GlobalKey<ScaffoldMessengerState> scaffoldMessengerKey =

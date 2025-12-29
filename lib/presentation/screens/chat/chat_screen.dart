@@ -2,7 +2,6 @@ import 'package:chat_app/core/firebase/firebase_auth_service.dart';
 import 'package:chat_app/domain/entity/message_model.dart';
 import 'package:chat_app/utils/app_constants.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:go_router/go_router.dart';
@@ -15,7 +14,7 @@ import '../../blocs/message/message_state.dart';
 
 class ChatScreen extends StatefulWidget {
   final UserModel user;
-  ChatScreen({super.key, required this.user});
+  const ChatScreen({super.key, required this.user});
 
   @override
   State<ChatScreen> createState() => _ChatScreenState();

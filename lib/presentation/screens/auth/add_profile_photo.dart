@@ -2,7 +2,6 @@ import 'dart:io';
 
 import 'package:chat_app/presentation/screens/widgets/custom_button.dart';
 import 'package:chat_app/utils/extensions/padding_extenstion.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:go_router/go_router.dart';

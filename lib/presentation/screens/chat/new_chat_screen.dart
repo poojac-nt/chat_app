@@ -1,4 +1,3 @@
-import 'package:chat_app/domain/entity/user_model.dart';
 import 'package:chat_app/utils/app_constants.dart';
 import 'package:chat_app/utils/extensions/padding_extenstion.dart';
 import 'package:flutter/material.dart';

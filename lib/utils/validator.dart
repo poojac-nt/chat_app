@@ -26,5 +26,6 @@ class Validator {
     if (name == null || name.trim().isEmpty) {
       return 'Name is required';
     }
+    return null;
   }
 }
