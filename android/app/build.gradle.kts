@@ -43,6 +43,23 @@ android {
             signingConfig = signingConfigs.getByName("debug")
         }
     }
+
+    // 1. Add flavor dimensions. This is required.
+    flavorDimensions += "app"
+
+    // 2. Use the correct Kotlin DSL syntax for productFlavors.
+    productFlavors {
+        create("dev") {
+            dimension = "app"
+            // 3. Add a suffix to the applicationId to allow installing both apps.
+            resValue("string", "app_name", "ChatApp Dev")
+        }
+        create("prod") {
+            dimension = "app"
+            // No suffix for the production app.
+            resValue("string", "app_name", "ChatApp")
+        }
+    }
 }
 
 flutter {

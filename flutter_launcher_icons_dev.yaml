@@ -1,0 +1,6 @@
+flutter_launcher_icons:
+  android: "launcher_icon"
+  ios: true
+  image_path: "assets/logo/dev_launcher_icon.jpg"
+  flavor: "dev"
+  min_sdk_version: 21

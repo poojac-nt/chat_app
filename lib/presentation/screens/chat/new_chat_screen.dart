@@ -86,16 +86,18 @@ class _NewChatScreenState extends State<NewChatScreen> {
               builder: (context, state) {
                 if (state is UserListFetching) {
                   // Show a skeleton list while fetching
-                  return Skeletonizer(
-                    child: ListView.builder(
-                      itemCount: 10,
-                      itemBuilder: (context, index) {
-                        // 2. Simplified skeleton to match the final UI
-                        return ListTile(
-                          leading: CircleAvatar(radius: 15.r),
-                          title: Text('Username is loading...'),
-                        );
-                      },
+                  return Expanded(
+                    child: Skeletonizer(
+                      child: ListView.builder(
+                        itemCount: 10,
+                        itemBuilder: (context, index) {
+                          // 2. Simplified skeleton to match the final UI
+                          return ListTile(
+                            leading: CircleAvatar(radius: 15.r),
+                            title: Text('Username is loading...'),
+                          );
+                        },
+                      ),
                     ),
                   );
                 } else if (state is UserListFetched) {

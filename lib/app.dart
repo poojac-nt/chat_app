@@ -1,8 +1,9 @@
-import 'package:chat_app/presentation/blocs/auth/auth_bloc.dart';
 import 'package:flutter/material.dart';
 
 import 'core/di/di.dart';
 import 'core/routes/app_router.dart';
+import 'flavors/flavor_config.dart';
+import 'presentation/blocs/auth/auth_bloc.dart';
 
 class MyApp extends StatelessWidget {
   final AuthBloc authBloc;
@@ -15,6 +16,7 @@ class MyApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       theme: ThemeData(fontFamily: 'Segeo Ui'),
       routerConfig: AppRouter.router,
+      title: FlavorConfig.instance.appName,
     );
   }
 }

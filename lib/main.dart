@@ -15,8 +15,10 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 import 'app.dart';
 import 'core/di/di.dart';
+import 'flavors/flavor_config.dart';
 
-void main() async {
+void initializeAndRunApp(Flavor flavor) async {
+  FlavorConfig.initialize(flavor);
   WidgetsFlutterBinding.ensureInitialized();
   await ScreenUtil.ensureScreenSize();
   await Firebase.initializeApp().then(
