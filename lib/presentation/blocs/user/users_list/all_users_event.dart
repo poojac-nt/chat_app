@@ -11,3 +11,10 @@ class FetchAllUsers extends UserListEvent {
   @override
   List<Object> get props => [];
 }
+
+class SearchUsers extends UserListEvent {
+  final String query;
+  const SearchUsers(this.query);
+  @override
+  List<Object> get props => [query];
+}

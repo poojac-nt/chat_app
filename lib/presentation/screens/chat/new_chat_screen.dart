@@ -19,10 +19,17 @@ class NewChatScreen extends StatefulWidget {
 }
 
 class _NewChatScreenState extends State<NewChatScreen> {
+  final searchController = TextEditingController();
   @override
   void initState() {
     context.read<UserListBloc>().add(FetchAllUsers());
     super.initState();
+  }
+
+  @override
+  void dispose() {
+    searchController.dispose();
+    super.dispose();
   }
 
   @override
@@ -50,49 +57,50 @@ class _NewChatScreenState extends State<NewChatScreen> {
             ),
           ],
         ),
-        body: BlocBuilder<UserListBloc, UserListState>(
-          builder: (context, state) {
-            if (state is UserListFetching) {
-              // Show a skeleton list while fetching
-              return Skeletonizer(
-                child: ListView.builder(
-                  itemCount: 10,
-                  itemBuilder: (context, index) {
-                    // 2. Simplified skeleton to match the final UI
-                    return ListTile(
-                      leading: CircleAvatar(radius: 15.r),
-                      title: Text('Username is loading...'),
-                    );
-                  },
+        body: Column(
+          children: [
+            TextField(
+              controller: searchController,
+              onChanged: (value) {
+                context.read<UserListBloc>().add(SearchUsers(value));
+              },
+              cursorColor: Colors.grey[500],
+              decoration: InputDecoration(
+                filled: true,
+                fillColor: Colors.grey[100],
+                prefixIcon: Icon(Icons.search, color: Colors.grey[500]),
+                contentPadding: EdgeInsets.symmetric(
+                  horizontal: 10.w,
+                  vertical: 1.h,
                 ),
-              );
-            } else if (state is UserListFetched) {
-              final users = state.users;
-              return Column(
-                children: [
-                  TextField(
-                    cursorColor: Colors.grey[500],
-                    decoration: InputDecoration(
-                      filled: true,
-                      fillColor: Colors.grey[100],
-                      prefixIcon: Icon(Icons.search, color: Colors.grey[500]),
-                      contentPadding: EdgeInsets.symmetric(
-                        horizontal: 10.w,
-                        vertical: 1.h,
-                      ),
-                      border: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(12.r),
-                        borderSide: BorderSide.none,
-                      ),
-                      hintText: 'Search',
-                      hintStyle: TextStyle(
-                        color: Colors.grey[500],
-                        fontSize: 14.sp,
-                      ),
+                border: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(12.r),
+                  borderSide: BorderSide.none,
+                ),
+                hintText: 'Search',
+                hintStyle: TextStyle(color: Colors.grey[500], fontSize: 14.sp),
+              ),
+            ).withPadding(EdgeInsets.symmetric(horizontal: 15.w)),
+            SizedBox(height: 10.h),
+            BlocBuilder<UserListBloc, UserListState>(
+              builder: (context, state) {
+                if (state is UserListFetching) {
+                  // Show a skeleton list while fetching
+                  return Skeletonizer(
+                    child: ListView.builder(
+                      itemCount: 10,
+                      itemBuilder: (context, index) {
+                        // 2. Simplified skeleton to match the final UI
+                        return ListTile(
+                          leading: CircleAvatar(radius: 15.r),
+                          title: Text('Username is loading...'),
+                        );
+                      },
                     ),
-                  ).withPadding(EdgeInsets.symmetric(horizontal: 15.w)),
-                  SizedBox(height: 10.h),
-                  Expanded(
+                  );
+                } else if (state is UserListFetched) {
+                  final users = state.searchUsers;
+                  return Expanded(
                     child: ListView.builder(
                       itemCount: users.length,
                       itemBuilder: (context, index) {
@@ -115,14 +123,14 @@ class _NewChatScreenState extends State<NewChatScreen> {
                         );
                       },
                     ),
-                  ),
-                ],
-              );
-            } else if (state is UserListFetchFailed) {
-              return Center(child: Text(state.failure.message));
-            }
-            return SizedBox.shrink();
-          },
+                  );
+                } else if (state is UserListFetchFailed) {
+                  return Center(child: Text(state.failure.message));
+                }
+                return SizedBox.shrink();
+              },
+            ),
+          ],
         ),
       ),
     );

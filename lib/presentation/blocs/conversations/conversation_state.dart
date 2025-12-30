@@ -11,10 +11,14 @@ class ConversationLoading extends ConversationState {
 }
 
 class ConversationFetched extends ConversationState {
+  final List<ConversationModel> searchConversations;
   final List<ConversationModel> conversations;
-  ConversationFetched(this.conversations);
+  ConversationFetched({
+    required this.conversations,
+    required this.searchConversations,
+  });
   @override
-  List<Object?> get props => [conversations];
+  List<Object?> get props => [conversations, searchConversations];
 }
 
 class ConversationFetchFailed extends ConversationState {

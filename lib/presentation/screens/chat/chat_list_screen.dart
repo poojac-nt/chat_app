@@ -2,6 +2,9 @@ import 'package:chat_app/core/firebase/firebase_auth_service.dart';
 import 'package:chat_app/domain/entity/user_model.dart';
 import 'package:chat_app/presentation/blocs/conversations/conversation_bloc.dart';
 import 'package:chat_app/presentation/blocs/conversations/conversation_event.dart';
+import 'package:chat_app/presentation/blocs/user/users_list/all_users_bloc.dart';
+import 'package:chat_app/presentation/blocs/user/users_list/all_users_event.dart';
+import 'package:chat_app/presentation/blocs/user/users_list/all_users_state.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -21,10 +24,17 @@ class ChatListScreen extends StatefulWidget {
 }
 
 class _ChatListScreenState extends State<ChatListScreen> {
+  final searchController = TextEditingController();
   @override
   void initState() {
     context.read<ConversationBloc>().add(GetConversationsEvent());
     super.initState();
+  }
+
+  @override
+  void dispose() {
+    searchController.dispose();
+    super.dispose();
   }
 
   @override
@@ -52,6 +62,12 @@ class _ChatListScreenState extends State<ChatListScreen> {
       body: Column(
         children: [
           TextField(
+            controller: searchController,
+            onChanged: (value) {
+              context.read<ConversationBloc>().add(
+                SearchConversationEvent(value),
+              );
+            },
             cursorColor: Colors.grey[500],
             decoration: InputDecoration(
               filled: true,
@@ -93,8 +109,7 @@ class _ChatListScreenState extends State<ChatListScreen> {
                 );
               }
               if (state is ConversationFetched) {
-                final conversations = state.conversations;
-
+                final conversations = state.searchConversations;
                 if (conversations.isEmpty) {
                   return Padding(
                     padding: EdgeInsets.only(top: 250.h, left: 15.w),

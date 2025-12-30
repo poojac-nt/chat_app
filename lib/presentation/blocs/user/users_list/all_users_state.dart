@@ -13,11 +13,12 @@ abstract class UserListState extends Equatable {
 class UserListFetching extends UserListState {}
 
 class UserListFetched extends UserListState {
+  final List<UserModel> searchUsers;
   final List<UserModel> users;
-  const UserListFetched(this.users);
+  const UserListFetched({required this.users, required this.searchUsers});
 
   @override
-  List<Object> get props => [users];
+  List<Object> get props => [users, searchUsers];
 }
 
 class UserListFetchFailed extends UserListState {
