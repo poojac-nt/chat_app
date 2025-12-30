@@ -18,6 +18,7 @@ abstract class AuthRepository {
   );
   Future<Either<Failure, String>> signIn(String email, String password);
   Future<Either<Failure, String>> signOut();
+  Future<Either<Failure, String>> resetPassword(String email);
   Stream<bool> isAuthenticated();
 }
 
@@ -108,5 +109,21 @@ class AuthRepositoryImpl implements AuthRepository {
   @override
   Stream<bool> isAuthenticated() {
     return FirebaseAuthService.authStateChanges.map((user) => user != null);
+  }
+
+  @override
+  Future<Either<Failure, String>> resetPassword(String email) async {
+    try {
+      await FirebaseAuth.instance.sendPasswordResetEmail(email: email);
+      return Right("Email sent successfully");
+    } on FirebaseAuthException catch (e) {
+      return Left(
+        Failure(
+          message: CustomFirebaseExceptions.customExceptionMessage(e.code),
+        ),
+      );
+    } catch (e) {
+      return Left(Failure(message: e.toString()));
+    }
   }
 }

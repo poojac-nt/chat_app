@@ -42,7 +42,8 @@ class AppRouter {
 
         final isLoggingIn = location == AppRoutes.signInScreen;
         final isSigningUp = location == AppRoutes.signUpScreen;
-        final isPublicPage = isLoggingIn || isSigningUp;
+        final isResettingPassword = location == AppRoutes.resetPasswordScreen;
+        final isPublicPage = isLoggingIn || isSigningUp || isResettingPassword;
 
         // Guard: If Unauthenticated and trying to access private page -> Login
         if (authState is UnAuthenticated && !isPublicPage) {

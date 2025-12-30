@@ -58,13 +58,6 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                 Container(
                                   decoration: BoxDecoration(
                                     borderRadius: BorderRadius.circular(100.r),
-                                    boxShadow: [
-                                      BoxShadow(
-                                        color: Colors.black54,
-                                        spreadRadius: -6,
-                                        blurRadius: 50,
-                                      ),
-                                    ],
                                   ),
                                   child: CircleAvatar(
                                     radius: 60.r,
@@ -77,7 +70,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                   ),
                                 ),
                                 Positioned(
-                                  top: 82.h,
+                                  top: 80.h,
                                   left: 79.w,
                                   child: Container(
                                     padding: EdgeInsets.symmetric(

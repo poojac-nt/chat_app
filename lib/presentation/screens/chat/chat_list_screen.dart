@@ -96,7 +96,8 @@ class _ChatListScreenState extends State<ChatListScreen> {
                 final conversations = state.conversations;
 
                 if (conversations.isEmpty) {
-                  return const Center(
+                  return Padding(
+                    padding: EdgeInsets.only(top: 250.h, left: 15.w),
                     child: Text('Welcome !! Start a conversation.'),
                   );
                 }
@@ -153,7 +154,7 @@ class _ChatListScreenState extends State<ChatListScreen> {
       floatingActionButton: FloatingActionButton(
         backgroundColor: Colors.blue,
         onPressed: () {
-          context.push(AppRoutes.allChatScreen);
+          context.push(AppRoutes.newChatScreen);
         },
         child: const Icon(Icons.add, color: Colors.white),
       ),

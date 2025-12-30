@@ -4,6 +4,7 @@ import 'package:chat_app/presentation/screens/chat/new_chat_screen.dart';
 import 'package:chat_app/presentation/screens/chat/chat_list_screen.dart';
 import 'package:go_router/go_router.dart';
 
+import '../../presentation/screens/auth/forgot_password_screen.dart';
 import '../../presentation/screens/auth/sign_in_screen.dart';
 import '../../presentation/screens/auth/sign_up_screen.dart';
 import '../../presentation/screens/chat/chat_screen.dart';
@@ -49,7 +50,11 @@ List<GoRoute> routes = [
     },
   ),
   GoRoute(
-    path: AppRoutes.allChatScreen,
+    path: AppRoutes.newChatScreen,
     builder: (context, state) => const NewChatScreen(),
+  ),
+  GoRoute(
+    path: AppRoutes.resetPasswordScreen,
+    builder: (context, state) => const ResetPasswordScreen(),
   ),
 ];

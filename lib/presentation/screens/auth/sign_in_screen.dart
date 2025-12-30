@@ -150,7 +150,9 @@ class _SignInScreenState extends State<SignInScreen> {
                               Align(
                                 alignment: Alignment.centerRight,
                                 child: TextButton(
-                                  onPressed: () {},
+                                  onPressed: () {
+                                    context.push(AppRoutes.resetPasswordScreen);
+                                  },
                                   child: Text(
                                     AppConstants.forgotPassword,
                                     style: TextStyle(

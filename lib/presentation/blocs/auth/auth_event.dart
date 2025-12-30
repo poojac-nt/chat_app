@@ -46,3 +46,10 @@ class SignOutEvent extends AuthEvent {
 class AuthLoggedIn extends AuthEvent {}
 
 class AuthLoggedOut extends AuthEvent {}
+
+class ForgotPasswordRequested extends AuthEvent {
+  final String email;
+  ForgotPasswordRequested(this.email);
+  @override
+  List<Object?> get props => [email];
+}
